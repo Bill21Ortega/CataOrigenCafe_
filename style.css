@@ -1,0 +1,156 @@
+/* === Reset === */
+* { margin:0; padding:0; box-sizing:border-box; }
+
+/* Fuente principal (usa la import en index) */
+body {
+  font-family: 'Roboto Slab', serif;
+  color: #e5d3b3;
+  line-height: 1.6;
+  -webkit-font-smoothing:antialiased;
+  background: url('images/Cafeteria.jpg') center center / cover fixed no-repeat;
+}
+
+/* NAVBAR */
+.navbar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:fixed;
+  top:0; left:0; right:0;
+  padding:18px 40px;
+  background: rgba(28,26,24,0.85);
+  backdrop-filter: blur(6px);
+  z-index:1000;
+  transition: padding .25s ease, background .25s ease;
+}
+.navbar.scrolled { padding:10px 40px; }
+
+.logo-wrapper { display:flex; align-items:center; gap:12px; }
+.nav-logo { height:70px; display:block; }
+.logo-text { font-size:1.8rem; font-weight:700; color:#e5d3b3; letter-spacing:1px; text-transform:uppercase; }
+
+.nav-links { list-style:none; display:flex; gap:22px; align-items:center; }
+.nav-links a { color:#e5d3b3; text-decoration:none; font-weight:600; }
+.nav-links a:hover { color:#c57c3d; }
+
+.cart-icon { background:transparent; border:0; color:#e5d3b3; font-size:1.1rem; cursor:pointer; position:relative; }
+#cartCount { background:#c57c3d; color:#fff; padding:2px 6px; border-radius:50%; font-size:.8rem; position:relative; top:-6px; left:6px; }
+
+/* HERO */
+.hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:100px 20px; position:relative; }
+.hero-overlay { position:absolute; inset:0; background: rgba(28,26,24,0.6); z-index:0; }
+.hero-content { position:relative; z-index:1; color:#fff8e7; max-width:900px; }
+.hero-content h1 { font-size:3.6rem; margin-bottom:12px; text-transform:uppercase; text-shadow:2px 2px 8px rgba(0,0,0,.7); }
+.hero-content p { font-size:1.2rem; margin-bottom:18px; color:#f4efe9; text-shadow:1px 1px 6px rgba(0,0,0,.6); }
+.btn-primary { display:inline-block; background:#c57c3d; color:#fff; padding:12px 26px; border-radius:30px; text-decoration:none; font-weight:700; }
+.btn-primary:hover { background:#9e5d2d; }
+
+/* SECTION default */
+section { margin:40px auto; width:90%; max-width:1000px; background: rgba(28,26,24,0.75); padding:80px 20px; border-radius:12px; color:#e5d3b3; opacity:0; transform:translateY(20px); }
+section h2 { font-size:2.4rem; margin-bottom:18px; text-transform:uppercase; color:#e5d3b3; }
+
+/* MENU GRID */
+.menu-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+.item { background: rgba(197,124,61,0.12); padding:16px; border-radius:10px; text-align:center; }
+.item img { width:100%; height:150px; object-fit:cover; border-radius:8px; margin-bottom:10px; }
+.item h3 { margin-bottom:6px; color:#fff8e7; }
+.item .price { color:#d2c2a9; margin-bottom:10px; }
+.add-to-cart, .item button { background:#c57c3d; color:#fff; border:0; padding:8px 12px; border-radius:6px; cursor:pointer; }
+.add-to-cart:hover, .item button:hover { background:#9e5d2d; }
+
+/* RESERVAS */
+.reservas input, .reservas button { display:block; width:80%; margin:10px auto; padding:10px; border-radius:8px; border:1px solid #555; background:#2a2725; color:#e5d3b3; }
+.reservas button { background:#c57c3d; cursor:pointer; }
+.reservas button:hover { background:#9e5d2d; }
+
+/* GALERÍA */
+.gallery-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap:12px; }
+.gallery-grid img { width:100%; height:160px; object-fit:cover; border-radius:8px; transition:transform .25s; }
+.gallery-grid img:hover { transform:scale(1.04); }
+
+/* OPINIONES */
+.opiniones input, .opiniones textarea, .opiniones button { display:block; width:80%; margin:10px auto; padding:10px; border-radius:8px; border:1px solid #555; background:#2a2725; color:#e5d3b3; }
+.opiniones button { background:#c57c3d; cursor:pointer; }
+#reviewsContainer .review { background: rgba(0,0,0,0.25); padding:12px; border-radius:8px; margin:12px 0; }
+
+/* CART MODAL */
+#cartModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:2000; }
+#cartModal.show { display:flex; }
+.modal-content { background:#1c1a18; padding:20px; border-radius:8px; width:90%; max-width:520px; color:#e5d3b3; }
+.modal-content ul { list-style:none; margin:12px 0 18px 0; padding:0; max-height:240px; overflow:auto; }
+.modal-content li { display:flex; justify-content:space-between; padding:8px 6px; border-bottom:1px solid rgba(255,255,255,0.03); }
+.modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:6px; }
+#checkout, #closeCart { padding:8px 12px; border-radius:6px; border:0; cursor:pointer; }
+#checkout { background:#9e5d2d; color:#fff; }
+#closeCart { background:#c57c3d; color:#fff; }
+
+/* Fade-in active */
+.fade-in { opacity:1; transform:translateY(0); transition:opacity .9s ease, transform .9s ease; }
+
+/* Responsive */
+@media (max-width:768px) {
+  .nav-links { display:none; } /* simplificación móvil */
+  .nav-logo { height:54px; }
+  .hero-content h1 { font-size:2rem; }
+  .menu-grid { grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); }
+}
+/* Fondo fijo para toda la página */
+body {
+  background: url('images/Cafetería.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Ajuste para separar el contenido inicial del navbar */
+.hero {
+  padding-top: 120px; /* Ajusta el valor si tu navbar es más alto o más bajo */
+}
+/* Estilos para mensajes de validación y éxito */
+.message {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  padding: 8px;
+  border-radius: 5px;
+  display: none; /* oculto por defecto */
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+input.error, select.error {
+  border-color: #e3342f;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+/* Estilo para las tazas de calificación */
+.rating {
+  display: flex;
+  gap: 8px;
+  font-size: 2rem;
+  cursor: pointer;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.rating span {
+  transition: transform 0.2s, color 0.2s;
+  color: #ccc; /* tazas apagadas */
+}
+
+.rating span.hover,
+.rating span.active {
+  color: #8B4513; /* café marrón oscuro */
+  transform: scale(1.2);
+}
