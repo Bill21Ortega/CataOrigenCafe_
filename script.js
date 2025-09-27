@@ -290,3 +290,45 @@ document.getElementById('review-form').addEventListener('submit', function (e) {
     resetHover();
   }
 });
+// === Filtros de menú ===
+const filterButtons = document.querySelectorAll(".filter-btn");
+const menuItems = document.querySelectorAll(".menu-grid .item");
+
+filterButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const category = btn.getAttribute("data-filter");
+
+    menuItems.forEach(item => {
+      item.style.display =
+        category === "all" || item.dataset.category === category
+          ? "block"
+          : "none";
+    });
+  });
+});
+// === Checkout simulado ===
+const checkoutBtn = document.getElementById("checkoutBtn");
+const checkoutMessage = document.getElementById("checkoutMessage");
+
+if (checkoutBtn) {
+  checkoutBtn.addEventListener("click", () => {
+    if (cart.length === 0) {
+      checkoutMessage.textContent = "Tu carrito está vacío.";
+      checkoutMessage.style.color = "red";
+    } else {
+      checkoutMessage.textContent = "✅ Compra finalizada con éxito. ¡Gracias!";
+      checkoutMessage.style.color = "green";
+      cart.length = 0; // Vacía carrito
+      updateCart();
+    }
+  });
+}
+// Menú hamburguesa
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
+  hamburger.setAttribute("aria-expanded", !expanded);
+  navMenu.classList.toggle('show');
+});
