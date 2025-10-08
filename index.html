@@ -24,23 +24,6 @@
         <li><a href="#galeria">Galería</a></li>
         <li><a href="#opiniones">Opiniones</a></li>
       </ul>
-      <nav class="navbar">
-  <div class="logo">☕ Cata Origen</div>
-  
-  <!-- Botón hamburguesa -->
-  <button class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
-    ☰
-  </button>
-  
-  <ul class="nav-links" id="menu">
-    <li><a href="#top">Inicio</a></li>
-    <li><a href="#menu">Menú</a></li>
-    <li><a href="#reservas">Reservas</a></li>
-    <li><a href="#opiniones">Opiniones</a></li>
-    <li><a href="#carrito">Carrito</a></li>
-  </ul>
-</nav>
-
     </nav>
 
     <button id="cartIcon" class="cart-icon" aria-label="Abrir carrito">🛒 <span id="cartCount">0</span></button>
@@ -59,51 +42,44 @@
   <!-- MENÚ -->
   <section id="menu" class="menu" role="region" aria-label="Menú">
     <h2>Menú Destacado</h2>
-      <div class="menu-filters">
-        <button data-filter="all" class="filter-btn">Todos</button>
-        <button data-filter="bebidas" class="filter-btn">Bebidas</button>
-        <button data-filter="postres" class="filter-btn">Postres</button>
-        <button data-filter="brunch" class="filter-btn">Brunch</button>
-      </div>
-
     <div class="menu-grid">
       <!-- Cada .item tiene data-name y data-price (numérico) -->
-      <div class="item" data-name="Espresso" data-price="5" data-category="bebidas">
+      <div class="item" data-name="Espresso" data-price="5">
         <img src="images/espresso.jpg" alt="Espresso">
         <h3>Espresso</h3>
         <p class="price">$5</p>
-        <button class="add-to-cart" aria-label="Agregar Espresso" >Agregar</button>
+        <button class="add-to-cart" aria-label="Agregar Espresso">Agregar</button>
       </div>
 
-      <div class="item" data-name="Capuccino" data-price="6" data-category="bebidas">
+      <div class="item" data-name="Capuccino" data-price="6">
         <img src="images/capuccino.jpg" alt="Capuccino">
         <h3>Capuccino</h3>
         <p class="price">$6</p>
         <button class="add-to-cart" aria-label="Agregar Capuccino">Agregar</button>
       </div>
 
-      <div class="item" data-name="Mocaccino" data-price="6.5" data-category="bebidas">
+      <div class="item" data-name="Mocaccino" data-price="6.5">
         <img src="images/mocaccino.jpg" alt="Mocaccino">
         <h3>Mocaccino</h3>
         <p class="price">$6.5</p>
         <button class="add-to-cart" aria-label="Agregar Mocaccino">Agregar</button>
       </div>
 
-      <div class="item" data-name="Latte" data-price="6" data-category="bebidas">
+      <div class="item" data-name="Latte" data-price="6">
         <img src="images/latte.jpg" alt="Latte">
         <h3>Latte</h3>
         <p class="price">$6</p>
         <button class="add-to-cart" aria-label="Agregar Latte">Agregar</button>
       </div>
 
-      <div class="item" data-name="Smoothie" data-price="7" data-category="bebidas">
+      <div class="item" data-name="Smoothie" data-price="7">
         <img src="images/smoothie.jpg" alt="Smoothie">
         <h3>Smoothie</h3>
         <p class="price">$7</p>
         <button class="add-to-cart" aria-label="Agregar Smoothie">Agregar</button>
       </div>
 
-      <div class="item" data-name="Jugo Natural" data-price="5.5" data-category="bebidas">
+      <div class="item" data-name="Jugo Natural" data-price="5.5">
         <img src="images/jugo-natural.jpg" alt="Jugo Natural">
         <h3>Jugo Natural</h3>
         <p class="price">$5.5</p>
@@ -111,28 +87,28 @@
       </div>
 
       <!-- Brunch -->
-      <div class="item" data-name="Huevos Benedictinos" data-price="8" data-category="Brunch">
+      <div class="item" data-name="Huevos Benedictinos" data-price="8">
         <img src="images/huevos-benedictinos.jpg" alt="Huevos Benedictinos">
         <h3>Huevos Benedictinos</h3>
         <p class="price">$8</p>
         <button class="add-to-cart" aria-label="Agregar Huevos Benedictinos">Agregar</button>
       </div>
 
-      <div class="item" data-name="Waffles con Frutas" data-price="7.5" data-category="Brunch">
+      <div class="item" data-name="Waffles con Frutas" data-price="7.5">
         <img src="images/waffles-frutas.jpg" alt="Waffles con Frutas">
         <h3>Waffles con Frutas</h3>
         <p class="price">$7.5</p>
         <button class="add-to-cart" aria-label="Agregar Waffles con Frutas">Agregar</button>
       </div>
 
-      <div class="item" data-name="Sándwich Club" data-price="7" data-category="Brunch">
+      <div class="item" data-name="Sándwich Club" data-price="7">
         <img src="images/sandwich-club.jpeg" alt="Sándwich Club">
         <h3>Sándwich Club</h3>
         <p class="price">$7</p>
         <button class="add-to-cart" aria-label="Agregar Sándwich Club">Agregar</button>
       </div>
 
-      <div class="item" data-name="Ensalada César" data-price="6.5" data-category="Brunch">
+      <div class="item" data-name="Ensalada César" data-price="6.5">
         <img src="images/ensalada-cesar.jpg" alt="Ensalada César">
         <h3>Ensalada César</h3>
         <p class="price">$6.5</p>
@@ -140,7 +116,6 @@
       </div>
     </div>
   </section>
-      </div>
 
   <!-- RESERVAS -->
   <section id="reservas" class="reservas" role="region" aria-label="Reservas">
@@ -213,8 +188,6 @@
       </div>
     </div>
   </div>
-<button id="checkoutBtn" class="btn-primary">Finalizar compra</button>
-<div id="checkoutMessage"></div>
 
   <footer>
     <p>&copy; 2025 Cata Origen Café</p>
