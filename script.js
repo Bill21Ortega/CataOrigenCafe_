@@ -256,3 +256,27 @@ if (reviewForm) {
     }
   });
 }
+// === FILTRO DE CATEGORÍAS DEL MENÚ ===
+const filterButtons = document.querySelectorAll('.filter-btn');
+const menuItems = document.querySelectorAll('.menu-grid .item');
+
+filterButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Quitar la clase "active" de todos los botones
+    filterButtons.forEach(b => b.classList.remove('active'));
+    // Activar el botón seleccionado
+    btn.classList.add('active');
+
+    const category = btn.getAttribute('data-category');
+
+    menuItems.forEach(item => {
+      // Mostrar todos si es "all"
+      if (category === 'all' || item.getAttribute('data-category') === category) {
+        item.style.display = 'block';
+        item.classList.add('fade-in');
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});

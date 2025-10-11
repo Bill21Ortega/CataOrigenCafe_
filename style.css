@@ -154,3 +154,90 @@ label {
   color: #8B4513; /* café marrón oscuro */
   transform: scale(1.2);
 }
+/* === FILTRO DE MENÚ (MISMO ESTILO DEL NAVBAR) === */
+.menu-filter {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: transparent;
+  color: #e5d3b3;
+  border: none;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  text-transform: none;
+  transition: color 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  color: #c57c3d;
+}
+.filter-btn {
+  position: relative;
+}
+
+.filter-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #c57c3d;
+  transition: width 0.3s ease;
+}
+/* === ENCABEZADO DE LA SECCIÓN MENÚ === */
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Menú a la izquierda, botones a la derecha */
+  gap: 30px;
+  margin-bottom: 25px;
+  flex-wrap: wrap; /* En pantallas chicas se acomoda */
+}
+
+/* TÍTULO “MENÚ” */
+.menu-header h2 {
+  font-size: 2.4rem;
+  color: #e5d3b3;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* FILTRO DE BOTONES (mismo estilo del navbar) */
+.menu-filter {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: transparent;
+  border: none;
+  color: #e5d3b3;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+/* Hover y estado activo */
+.filter-btn:hover,
+.filter-btn.active {
+  color: #c57c3d;
+}
+
+/* Eliminamos la línea inferior (underline) */
+.filter-btn::after {
+  content: none;
+}
