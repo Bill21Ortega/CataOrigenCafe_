@@ -158,135 +158,101 @@ document.addEventListener('DOMContentLoaded', () => {
 
 }); // DOMContentLoaded end
 // --- Validación de Reservas ---
-document.getElementById('reservation-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const name = document.getElementById('name');
-  const date = document.getElementById('date');
-  const time = document.getElementById('time');
-  const people = document.getElementById('people');
-  const message = document.getElementById('reservation-message');
-  let valid = true;
+/* === VALIDACIÓN DE FORMULARIOS === */
 
-  // Reiniciar estilos
-  [name, date, time, people].forEach(input => input.classList.remove('error'));
+// --- Reservas ---
+const reservaForm = document.getElementById('reservation-form');
+if (reservaForm) {
+  reservaForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name');
+    const date = document.getElementById('date');
+    const time = document.getElementById('time');
+    const people = document.getElementById('people');
+    const message = document.getElementById('reservation-message');
+    let valid = true;
 
-  if (!name.value.trim()) { name.classList.add('error'); valid = false; }
-  if (!date.value) { date.classList.add('error'); valid = false; }
-  if (!time.value) { time.classList.add('error'); valid = false; }
-  if (!people.value || people.value <= 0) { people.classList.add('error'); valid = false; }
+    [name, date, time, people].forEach(i => i.classList.remove('error'));
 
-  if (!valid) {
-    message.textContent = "Por favor, corrige los campos marcados.";
-    message.className = "message error";
-    message.style.display = "block";
-  } else {
-    message.textContent = "✅ Fecha reservada";
-    message.className = "message success";
-    message.style.display = "block";
-    this.reset();
-  }
-});
+    if (!name.value.trim()) { name.classList.add('error'); valid = false; }
+    if (!date.value) { date.classList.add('error'); valid = false; }
+    if (!time.value) { time.classList.add('error'); valid = false; }
+    if (!people.value || people.value <= 0) { people.classList.add('error'); valid = false; }
 
-// --- Validación de Comentarios ---
-document.getElementById('review-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const name = document.getElementById('review-name');
-  const text = document.getElementById('review-text');
-  const message = document.getElementById('review-message');
-  let valid = true;
-
-  [name, text].forEach(input => input.classList.remove('error'));
-
-  if (!name.value.trim()) { name.classList.add('error'); valid = false; }
-  if (!text.value.trim()) { text.classList.add('error'); valid = false; }
-
-  if (!valid) {
-    message.textContent = "Por favor, completa los campos obligatorios.";
-    message.className = "message error";
-    message.style.display = "block";
-  } else {
-    message.textContent = "✅ Comentario enviado";
-    message.className = "message success";
-    message.style.display = "block";
-    this.reset();
-  }
-});
-
-// --- Mensaje de compra exitosa ---
-function mostrarCompraExitosa() {
-  const carrito = document.querySelector('#carrito-message') || document.createElement('div');
-  carrito.id = 'carrito-message';
-  carrito.className = 'message success';
-  carrito.textContent = '✅ Compra exitosa';
-  document.body.appendChild(carrito);
-  carrito.style.display = 'block';
-  setTimeout(() => carrito.style.display = 'none', 3000);
-}
-// --- Calificación con tazas de café ---
-const ratingContainer = document.getElementById('rating');
-let selectedRating = 0;
-
-ratingContainer.querySelectorAll('span').forEach(span => {
-  // Hover para mostrar selección previa
-  span.addEventListener('mouseenter', () => {
-    resetHover();
-    highlightCups(span.dataset.value);
-  });
-
-  // Quitar hover al salir
-  span.addEventListener('mouseleave', () => {
-    resetHover();
-    if (selectedRating > 0) highlightCups(selectedRating);
-  });
-
-  // Guardar selección al hacer clic
-  span.addEventListener('click', () => {
-    selectedRating = parseInt(span.dataset.value);
-    resetHover();
-    highlightCups(selectedRating);
-  });
-});
-
-// Resalta las tazas hasta cierto valor
-function highlightCups(value) {
-  ratingContainer.querySelectorAll('span').forEach(s => {
-    if (parseInt(s.dataset.value) <= value) {
-      s.classList.add('active');
+    if (!valid) {
+      message.textContent = "Por favor, corrige los campos marcados.";
+      message.className = "message error";
+      message.style.display = "block";
+    } else {
+      message.textContent = "✅ Fecha reservada";
+      message.className = "message success";
+      message.style.display = "block";
+      reservaForm.reset();
     }
   });
 }
 
-// Reinicia el estado visual
-function resetHover() {
-  ratingContainer.querySelectorAll('span').forEach(s => s.classList.remove('active', 'hover'));
+// --- Calificación con tazas ---
+const ratingContainer = document.getElementById('rating');
+let selectedRating = 0;
+
+if (ratingContainer) {
+  ratingContainer.querySelectorAll('span').forEach(span => {
+    span.addEventListener('mouseenter', () => {
+      resetHover();
+      highlightCups(span.dataset.value);
+    });
+    span.addEventListener('mouseleave', () => {
+      resetHover();
+      if (selectedRating > 0) highlightCups(selectedRating);
+    });
+    span.addEventListener('click', () => {
+      selectedRating = parseInt(span.dataset.value);
+      resetHover();
+      highlightCups(selectedRating);
+    });
+  });
 }
 
-// Modificar el envío del comentario para incluir la calificación
-document.getElementById('review-form').addEventListener('submit', function (e) {
-  e.preventDefault();
-  const name = document.getElementById('review-name');
-  const text = document.getElementById('review-text');
-  const message = document.getElementById('review-message');
-  let valid = true;
+function highlightCups(value) {
+  ratingContainer.querySelectorAll('span').forEach(s => {
+    if (parseInt(s.dataset.value) <= value) s.classList.add('active');
+  });
+}
 
-  [name, text].forEach(input => input.classList.remove('error'));
+function resetHover() {
+  ratingContainer.querySelectorAll('span').forEach(s => s.classList.remove('active'));
+}
 
-  if (!name.value.trim()) { name.classList.add('error'); valid = false; }
-  if (!text.value.trim()) { text.classList.add('error'); valid = false; }
-  if (selectedRating === 0) { valid = false; }
+// --- Opiniones ---
+const reviewForm = document.getElementById('review-form');
+if (reviewForm) {
+  reviewForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('review-name');
+    const text = document.getElementById('review-text');
+    const message = document.getElementById('review-message');
+    let valid = true;
 
-  if (!valid) {
-    message.textContent = selectedRating === 0 
-      ? "Por favor, selecciona una calificación y completa los campos." 
-      : "Por favor, completa los campos obligatorios.";
-    message.className = "message error";
-    message.style.display = "block";
-  } else {
-    message.textContent = `✅ Comentario enviado (Calificación: ${selectedRating} ☕)`;
-    message.className = "message success";
-    message.style.display = "block";
-    this.reset();
-    selectedRating = 0;
-    resetHover();
-  }
-});
+    [name, text].forEach(i => i.classList.remove('error'));
+
+    if (!name.value.trim()) { name.classList.add('error'); valid = false; }
+    if (!text.value.trim()) { text.classList.add('error'); valid = false; }
+    if (selectedRating === 0) { valid = false; }
+
+    if (!valid) {
+      message.textContent = selectedRating === 0
+        ? "Por favor, selecciona una calificación y completa los campos."
+        : "Por favor, completa los campos obligatorios.";
+      message.className = "message error";
+      message.style.display = "block";
+    } else {
+      message.textContent = `✅ Comentario enviado (${selectedRating} ☕)`;
+      message.className = "message success";
+      message.style.display = "block";
+      reviewForm.reset();
+      selectedRating = 0;
+      resetHover();
+    }
+  });
+}
