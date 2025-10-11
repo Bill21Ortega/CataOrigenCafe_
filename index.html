@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cata Origen Café</title>
   <meta name="description" content="Landing industrial para Cata Origen Café — menú, reservas, galería y opiniones."/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -38,8 +39,6 @@
       <a href="#menu" class="btn-primary">Explorar Menú</a>
     </div>
   </section>
-
-  <!-- MENÚ -->
   <section id="menu" class="menu" role="region" aria-label="Menú">
   <div class="menu-header">
     <h2>Menú</h2>
@@ -145,7 +144,7 @@
       </div>
     </div>
   </section>
-
+  <div class="dashboard">
   <!-- RESERVAS -->
   <section id="reservas" class="reservas" role="region" aria-label="Reservas">
     <h2>Reservas Online</h2>
@@ -171,11 +170,9 @@
   <section id="galeria" class="galeria" role="region" aria-label="Galería">
     <h2>Galería</h2>
     <div class="gallery-grid">
-      <img src="images/galeria1.jpg" alt="Galería 1">
       <img src="images/galeria2.jpg" alt="Galería 2">
       <img src="images/galeria3.jpeg" alt="Galería 3">
       <img src="images/galeria4.jpg" alt="Galería 4">
-      <img src="images/galeria5.jpg" alt="Galería 5">
       <img src="images/galeria6.jpg" alt="Galería 6">
     </div>
   </section>
@@ -204,6 +201,7 @@
 
     <div id="reviewsContainer" aria-live="polite"></div>
   </section>
+</div>
 
   <!-- CARRO (MODAL) -->
   <div id="cartModal" aria-hidden="true">
@@ -218,10 +216,52 @@
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 Cata Origen Café</p>
-  </footer>
+ <footer class="footer">
+  <button class="filter-btn trabaja-btn">Trabaja con nosotros</button>
+  <div class="footer-content">
+    <p>Cata Origen café</p>
+    <p>📍 Dirección: Calle X, Ciudad, País</p>
+    <p>📞 Teléfono: +XX XXXX XXXX</p>
+    <p>✉️ Email: contacto@cataorigencafe.com</p>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    
+  </div>
+</footer>
+ <div id="applyModal" class="modal" aria-hidden="true" role="dialog" aria-label="Formulario de empleo">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-box" role="document">
+    <button class="modal-close" id="closeApplyModal" aria-label="Cerrar modal">✕</button>
+    <h3>Trabaja con nosotros</h3>
 
+    <form id="applyForm" enctype="multipart/form-data" novalidate>
+      <label for="app-name">Nombre completo</label>
+      <input type="text" id="app-name" name="name" required>
+
+      <label for="app-id">Número de identificación</label>
+      <input type="text" id="app-id" name="idnumber" required>
+
+      <label for="app-area">Área donde desea trabajar</label>
+      <input type="text" id="app-area" name="area" required>
+
+      <label for="app-cv">Hoja de vida (PDF)</label>
+      <input type="file" id="app-cv" name="cv" accept="application/pdf" required>
+
+      <label for="app-msg">¿Por qué quieres trabajar con nosotros?</label>
+      <textarea id="app-msg" name="message" rows="4" required></textarea>
+
+      <div class="apply-actions">
+        <button type="submit" class="filter-btn">Enviar</button>
+        <button type="button" id="cancelApply" class="filter-btn">Cancelar</button>
+      </div>
+
+      <div id="apply-feedback" class="message" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
   <script src="script.js"></script>
 </body>
 </html>

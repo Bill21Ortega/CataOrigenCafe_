@@ -31,91 +31,139 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('section').forEach(sec => observer.observe(sec));
 
   /* ===== CART (simulado) ===== */
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const cartCount = document.getElementById('cartCount');
-  const cartIcon = document.getElementById('cartIcon');
-  const cartModal = document.getElementById('cartModal');
-  const cartItemsEl = document.getElementById('cartItems');
-  const cartTotalEl = document.getElementById('cartTotal');
-  const closeCartBtn = document.getElementById('closeCart');
-  const checkoutBtn = document.getElementById('checkout');
+  /* ===== CART (simulado) ===== */
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartCount = document.getElementById('cartCount');
+const cartIcon = document.getElementById('cartIcon');
+const cartModal = document.getElementById('cartModal');
+const cartItemsEl = document.getElementById('cartItems');
+const cartTotalEl = document.getElementById('cartTotal');
+const closeCartBtn = document.getElementById('closeCart');
+const checkoutBtn = document.getElementById('checkout');
+const cartFeedback = document.getElementById('cartFeedback');
+const cartPayment = document.getElementById('cartPayment');
+const finalizePurchase = document.getElementById('finalizePurchase');
+const cancelPayment = document.getElementById('cancelPayment');
 
-  function updateCartCount() {
-    cartCount.textContent = cart.length;
+function updateCartCount() {
+  if (cartCount) cartCount.textContent = cart.length;
+}
+
+function renderCart() {
+  if (!cartItemsEl) return;
+  if (cart.length === 0) {
+    cartItemsEl.innerHTML = '<li>Carrito vacío</li>';
+    cartTotalEl.textContent = 'Total: $0.00';
+    return;
   }
+  cartItemsEl.innerHTML = cart.map((it, i) => {
+    return `<li>
+      <span>${it.name} <small style="color:#d2c2a9">($${Number(it.price).toFixed(2)})</small></span>
+      <span><button class="remove-item" data-index="${i}" aria-label="Eliminar ${it.name}">Eliminar</button></span>
+    </li>`;
+  }).join('');
+  const total = cart.reduce((s, it) => s + Number(it.price), 0);
+  cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
+}
 
-  function renderCart() {
-    if (!cartItemsEl) return;
-    if (cart.length === 0) {
-      cartItemsEl.innerHTML = '<li>Carrito vacío</li>';
-      cartTotalEl.textContent = 'Total: $0.00';
-      return;
-    }
-    cartItemsEl.innerHTML = cart.map((it, i) => {
-      return `<li>
-        <span>${it.name} <small style="color:#d2c2a9">($${Number(it.price).toFixed(2)})</small></span>
-        <span><button class="remove-item" data-index="${i}" aria-label="Eliminar ${it.name}">Eliminar</button></span>
-      </li>`;
-    }).join('');
-    const total = cart.reduce((s, it) => s + Number(it.price), 0);
-    cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
-  }
+// Agregar productos al carrito
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const itemEl = btn.closest('.item');
+    const name = itemEl.dataset.name || itemEl.querySelector('h3')?.innerText || 'Producto';
+    const price = parseFloat(itemEl.dataset.price || itemEl.querySelector('.price')?.innerText?.replace(/\$/g, '') || 0);
+    cart.push({ name, price });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
 
-  // add to cart buttons
-  document.querySelectorAll('.add-to-cart').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const itemEl = btn.closest('.item');
-      const name = itemEl.dataset.name || itemEl.querySelector('h3')?.innerText || 'Producto';
-      const price = itemEl.dataset.price || itemEl.dataset?.price || (() => {
-        const p = itemEl.querySelector('.price')?.innerText?.replace(/\$/g,'') || '0';
-        return parseFloat(p);
-      })();
-      cart.push({ name, price: Number(price) });
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartCount();
-      // pequeño feedback
-      btn.textContent = 'Añadido ✓';
-      setTimeout(() => btn.textContent = 'Agregar', 1000);
-    });
+    // Pequeño feedback visual
+    btn.textContent = 'Añadido ✓';
+    setTimeout(() => btn.textContent = 'Agregar', 1000);
   });
+});
 
-  // open cart modal
+// Abrir modal del carrito
+if (cartIcon) {
   cartIcon.addEventListener('click', () => {
     renderCart();
     cartModal.classList.add('show');
-    cartModal.setAttribute('aria-hidden','false');
+    cartModal.setAttribute('aria-hidden', 'false');
+    if (cartFeedback) cartFeedback.style.display = 'none';
   });
+}
 
-  // close cart
+// Cerrar modal
+if (closeCartBtn) {
   closeCartBtn.addEventListener('click', () => {
     cartModal.classList.remove('show');
-    cartModal.setAttribute('aria-hidden','true');
+    cartModal.setAttribute('aria-hidden', 'true');
   });
+}
 
-  // delegate remove buttons inside cart
-  cartItemsEl.addEventListener('click', (e) => {
-    if (e.target.matches('.remove-item')) {
-      const idx = Number(e.target.dataset.index);
-      cart.splice(idx, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartCount();
-      renderCart();
+// Eliminar item del carrito
+cartItemsEl.addEventListener('click', (e) => {
+  if (e.target.matches('.remove-item')) {
+    const idx = Number(e.target.dataset.index);
+    cart.splice(idx, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    renderCart();
+  }
+});
+
+// Iniciar compra
+checkoutBtn.addEventListener('click', () => {
+  if (cart.length === 0) {
+    if (cartFeedback) {
+      cartFeedback.textContent = 'Tu carrito está vacío.';
+      cartFeedback.className = 'message error';
+      cartFeedback.style.display = 'block';
     }
-  });
+    return;
+  }
 
-  // checkout simulation
-  checkoutBtn.addEventListener('click', () => {
-    if (cart.length === 0) { alert('El carrito está vacío.'); return; }
-    alert('Compra simulada completada. Gracias!');
+  // Mostrar formulario de pago
+  cartPayment.style.display = 'block';
+  if (cartFeedback) cartFeedback.style.display = 'none';
+});
+
+// Cancelar pago
+if (cancelPayment) {
+  cancelPayment.addEventListener('click', () => {
+    cartPayment.style.display = 'none';
+    if (cartFeedback) cartFeedback.style.display = 'none';
+  });
+}
+
+// Finalizar compra (simulada)
+if (finalizePurchase) {
+  finalizePurchase.addEventListener('click', () => {
+    // Mostrar mensaje dentro del modal
+    cartFeedback.textContent = '✅ Tu compra ha sido procesada. ¡Gracias por tu pedido!';
+    cartFeedback.className = 'message success';
+    cartFeedback.style.display = 'block';
+
+    // Vaciar carrito y almacenamiento
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
     renderCart();
-    cartModal.classList.remove('show');
-  });
 
-  // load cart count on start
-  updateCartCount();
+    // Ocultar formulario de pago
+    cartPayment.style.display = 'none';
+
+    // Ocultar mensaje luego de unos segundos
+    setTimeout(() => {
+      cartFeedback.style.display = 'none';
+      cartModal.classList.remove('show');
+      cartModal.setAttribute('aria-hidden', 'true');
+    }, 3500);
+  });
+}
+
+// Cargar contador al iniciar
+updateCartCount();
+
 
   /* ===== Reservation form simple validation (simulado) ===== */
   const reservationForm = document.getElementById('reservationForm');
@@ -280,3 +328,104 @@ filterButtons.forEach(btn => {
     });
   });
 });
+/* === MODAL: Trabaja con nosotros === */
+const trabajaBtn = document.querySelector('.trabaja-btn');
+const applyModal = document.getElementById('applyModal');
+const modalBackdrop = document.getElementById('modalBackdrop');
+const closeApplyModal = document.getElementById('closeApplyModal');
+const cancelApply = document.getElementById('cancelApply');
+const applyForm = document.getElementById('applyForm');
+const applyFeedback = document.getElementById('apply-feedback');
+
+function openApplyModal() {
+  if (!applyModal) return;
+  applyModal.classList.add('show');
+  applyModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeApply() {
+  if (!applyModal) return;
+  applyModal.classList.remove('show');
+  applyModal.setAttribute('aria-hidden', 'true');
+  // limpiar feedback y formulario después de cerrar
+  if (applyFeedback) { applyFeedback.textContent = ''; applyFeedback.className = 'message'; }
+  if (applyForm) applyForm.reset();
+}
+
+// Abrir modal al hacer click en botón 'Trabaja con nosotros'
+if (trabajaBtn) {
+  trabajaBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openApplyModal();
+  });
+}
+
+// Cerrar modal con X o cancelar
+if (closeApplyModal) closeApplyModal.addEventListener('click', closeApply);
+if (cancelApply) cancelApply.addEventListener('click', closeApply);
+
+// Cerrar al hacer click fuera del modal (backdrop)
+if (modalBackdrop) modalBackdrop.addEventListener('click', closeApply);
+
+// Validación/simulación de envío
+if (applyForm) {
+  applyForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('app-name');
+    const idnum = document.getElementById('app-id');
+    const area = document.getElementById('app-area');
+    const cv = document.getElementById('app-cv');
+    const msg = document.getElementById('app-msg');
+
+    // limpiar estilos previos
+    [name, idnum, area, cv, msg].forEach(f => f && f.classList.remove('error'));
+
+    let valid = true;
+    if (!name.value.trim()) { valid = false; name.classList.add('error'); }
+    if (!idnum.value.trim()) { valid = false; idnum.classList.add('error'); }
+    if (!area.value.trim()) { valid = false; area.classList.add('error'); }
+    if (!msg.value.trim()) { valid = false; msg.classList.add('error'); }
+
+    // validar archivo PDF
+    if (!cv.files || !cv.files[0]) {
+      valid = false;
+      cv.classList.add('error');
+    } else {
+      const file = cv.files[0];
+      if (file.type !== 'application/pdf') {
+        valid = false;
+        cv.classList.add('error');
+        if (applyFeedback) {
+          applyFeedback.textContent = 'El CV debe ser un archivo PDF.';
+          applyFeedback.className = 'message error';
+        }
+      }
+    }
+
+    if (!valid) {
+      if (applyFeedback && applyFeedback.className.indexOf('error') === -1) {
+        applyFeedback.textContent = ' Por favor completa los campos obligatorios correctamente ❌';
+        applyFeedback.className = 'message error';
+      }
+      return;
+    }
+
+    // Simular envío
+    if (applyFeedback) {
+      applyFeedback.textContent = 'Enviando...';
+      applyFeedback.className = 'message';
+    }
+    // simulamos delay
+    setTimeout(() => {
+      if (applyFeedback) {
+        applyFeedback.textContent = ' Enviado, te estaremos contactando, muchas gracias ✅ ';
+        applyFeedback.className = 'message success';
+      }
+      // limpiar formulario pero dejar modal visible unos segundos
+      setTimeout(() => {
+        closeApply();
+      }, 2400);
+    }, 900);
+  });
+}

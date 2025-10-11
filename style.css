@@ -7,7 +7,7 @@ body {
   color: #e5d3b3;
   line-height: 1.6;
   -webkit-font-smoothing:antialiased;
-  background: url('images/Cafeteria.jpg') center center / cover fixed no-repeat;
+  background: url('images/galeria1.jpg') center center / cover fixed no-repeat;
 }
 
 /* NAVBAR */
@@ -82,7 +82,7 @@ section h2 { font-size:2.4rem; margin-bottom:18px; text-transform:uppercase; col
 .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:6px; }
 #checkout, #closeCart { padding:8px 12px; border-radius:6px; border:0; cursor:pointer; }
 #checkout { background:#9e5d2d; color:#fff; }
-#closeCart { background:#c57c3d; color:#fff; }
+#closeCart { background:#c57c3d; color:#ffffff; }
 
 /* Fade-in active */
 .fade-in { opacity:1; transform:translateY(0); transition:opacity .9s ease, transform .9s ease; }
@@ -114,15 +114,11 @@ body {
 }
 
 .message.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  color:#ffffff;
 }
 
 .message.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  color:#ffffff;
 }
 
 input.error, select.error {
@@ -241,3 +237,238 @@ label {
 .filter-btn::after {
   content: none;
 }
+/* === DASHBOARD CON 3 SECCIONES EN LÍNEA === */ .dashboard {
+  display: flex;
+  justify-content: center;     /* Centra horizontalmente el grupo */
+  align-items: flex-start;     /* Alinea arriba (por si difieren en altura) */
+  gap: 40px;                   /* Espacio entre cada sección */
+  flex-wrap: nowrap;           /* No se bajan a otra línea */
+  width: 100%;
+  max-width: 1400px;
+  margin: 160px auto 100px auto; /* Margen superior por el navbar */
+  padding: 0 20px;             /* Respira un poco en los lados */
+  box-sizing: border-box;
+}
+
+/* Cada sección dentro del dashboard */ .dashboard section {
+  flex: 1 1 0;
+  background: rgba(28,26,24,0.75);
+  padding: 40px 20px;
+  border-radius: 12px;
+  color: #e5d3b3;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 420px; /* Controla el ancho para que las tres quepan bien */
+}
+
+.dashboard section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Títulos de cada sección */ .dashboard h2 {
+  font-size: 2rem;
+  color: #e5d3b3;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+/* --- Ajuste responsive --- */ @media (max-width: 1200px) {
+  .dashboard {
+    flex-wrap: wrap; /* Si la pantalla es más chica, que bajen */
+    justify-content: center;
+  }
+
+  .dashboard section {
+    max-width: 90%;
+  }
+}
+
+/* === FOOTER === */
+.footer {
+  background: rgba(10,9,8,0.95);
+  color: #e5d3b3;
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 2px solid rgba(197,124,61,0.4);
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.footer p {
+  margin: 6px 0;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin: 18px 0;
+}
+
+.social-icons a {
+  color: #e5d3b3;
+  font-size: 1.4rem;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #c57c3d;
+}
+
+.trabaja-btn {
+  margin-top: 10px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.modal-box {
+  position: relative;
+  background: #1c1a18;
+  color: #e5d3b3;
+  padding: 22px;
+  border-radius: 10px;
+  width: 92%;
+  max-width: 620px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  z-index: 3;
+}
+
+.modal-box h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
+
+.modal-box label {
+  display: block;
+  margin: 10px 0 6px;
+  font-weight: 600;
+}
+
+.modal-box input[type="text"],
+.modal-box input[type="file"],
+.modal-box input[type="email"],
+.modal-box input[type="number"],
+.modal-box input[type="date"],
+.modal-box input[type="time"],
+.modal-box textarea {
+  width: 100%;
+  padding: 10px;
+  background: #2a2725;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #e5d3b3;
+  margin-bottom: 6px;
+  font-family: inherit;
+}
+
+.modal-box textarea { resize: vertical; }
+
+.apply-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* reutilizamos filter-btn para el look del botón */ .modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #e5d3b3;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* mensaje de feedback en modal */ #apply-feedback.message { display: block; margin-top: 12px; }
+
+/* responsive */ @media (max-width: 900px) {
+  .three-grid { gap: 18px; }
+  .box-small { min-height: auto; max-height: 520px; }
+}
+
+@media (max-width: 480px) {
+  .modal-box { padding: 14px; }
+}
+/* === Carrito: estilos extra para botones y formulario de pago === */
+
+/* Botón que aparece dentro de la lista (Eliminar) como texto plano */
+#cartItems .remove-item {
+  background: transparent;
+  border: none;
+  color: #e5d3b3;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+#cartItems .remove-item:hover {
+  color: #c57c3d;
+}
+
+/* Ajustes para el modal de carrito: asegurar consistencia visual */
+#cartModal .modal-content {
+  background: #1c1a18;
+  color: #e5d3b3;
+}
+
+/* Mensajes de feedback en carrito, reutiliza .message */
+#cartFeedback.message { display:block; margin-top:8px; }
+
+/* Inputs del formulario de pago (si quieres afinarlos) */
+#cartPayment input {
+  box-sizing: border-box;
+  margin-bottom: 6px;
+}
+
+/* Botones dentro del modal con estilo igual al navbar */
+.filter-btn {
+  background: transparent;
+  border: none;
+  color: #e5d3b3;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.filter-btn:hover {
+  color: #c57c3d;
+}
+
+/* Botón Finalizar compra (cuando procesando) puede adoptar clase success estilo ya definido */
